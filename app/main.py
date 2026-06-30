@@ -30,10 +30,10 @@ limiter = Limiter(
 )
 
 # FastAPI app
-api = FastAPI(title="Divine Vision MCP API")
-api.state.limiter = limiter
-api.add_middleware(SlowAPIMiddleware)
-api.add_middleware(
+app = FastAPI(title="Divine Vision MCP API")
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
+app.add_middleware(
     CORSMiddleware,
 
     allow_origins=[
@@ -57,7 +57,7 @@ class ExecuteToolRequest(BaseModel):
     name: str
     args: dict = {}
 
-@api.exception_handler(RateLimitExceeded)
+@app.exception_handler(RateLimitExceeded)
 async def rate_limit_handler(
     request: Request,
     exc: RateLimitExceeded,
@@ -70,14 +70,14 @@ async def rate_limit_handler(
         },
     )
 
-@api.get("/health")
+@app.get("/health")
 async def health():
     return {
         "success": True, 
         "message": "MCP API running"
         }
 
-@api.get("/tools")
+@app.get("/tools")
 async def list_tools(
     _: None = Depends(verify_api_key),
 ):
@@ -120,7 +120,7 @@ ALLOWED_TOOLS = {
     "get_order_summary": get_order_summary,
 }
 
-@api.post("/execute")
+@app.post("/execute")
 @limiter.limit("20/minute")
 async def execute_tool(payload: ExecuteToolRequest,request: Request,):
 
