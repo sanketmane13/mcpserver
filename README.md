@@ -253,7 +253,7 @@ Create a `.env` file.
 Example
 
 ```env
-SHIPMENT_API_BASE_URL=https://shipmentapi.vercel.app/api/shipments/
+SHIPMENT_API_BASE_URL=https://YOUR_SHIPMENT_API/api/shipments/
 ALLOWED_ORIGIN=http://localhost:5000
 MCP_API_KEY=your-secret-api-key
 ```
@@ -416,7 +416,8 @@ MIT License
 
 **Sanket Mane**
 
-Final Year B.Tech Student
+Full stack developer
+contact - sanketmane0407@gmail.com
 
 AI | Backend | MCP | FastAPI | Next.js | Express.js
 
